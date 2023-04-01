@@ -7,7 +7,7 @@ var express = require("express"),
 		require("passport-local-mongoose")
 const User = require("./model/User");
 var app = express();
-const router = express.Router;
+
 mongoose.connect("mongodb+srv://dron:TyJzsc6ZsbzhUJhx@cluster0.petssoe.mongodb.net/?retryWrites=true&w=majority");
 
 app.set("view engine", "ejs");
@@ -28,7 +28,7 @@ passport.deserializeUser(User.deserializeUser());
 //=====================
 // ROUTES
 //=====================
-app.use(express.static('views'));
+
 // Showing home page
 app.get("/", function (req, res) {
 	res.render("home");
@@ -99,7 +99,7 @@ var port = process.env.PORT || 3000;
 app.listen(port, function () {
 	console.log("Server Has Started!");
 });
-module.export = app
+
 
 
 // import { promises as fs } from "fs";
