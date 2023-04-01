@@ -28,7 +28,7 @@ passport.deserializeUser(User.deserializeUser());
 //=====================
 // ROUTES
 //=====================
-app.use(router);
+app.use(express.static('views'));
 // Showing home page
 app.get("/", function (req, res) {
 	res.render("home");
