@@ -1,25 +1,27 @@
-var express = require("express"),
+
+const express = require("express"),
 	mongoose = require("mongoose"),
 	passport = require("passport"),
 	bodyParser = require("body-parser"),
 	LocalStrategy = require("passport-local"),
 	passportLocalMongoose =
 		require("passport-local-mongoose")
+//const router = express.Router();
 const User = require("./model/User");
-var app = express();
+const router = express.Router();
 
 mongoose.connect("mongodb+srv://dron:TyJzsc6ZsbzhUJhx@cluster0.petssoe.mongodb.net/?retryWrites=true&w=majority");
 
-app.set("view engine", "ejs");
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(require("express-session")({
-	secret: "Rusty is a dog",
+router.set("view engine", "ejs");
+router.use(bodyParser.urlencoded({ extended: true }));
+router.use(require("express-session")({
+	secret: "Cool Image",
 	resave: false,
 	saveUninitialized: false
 }));
 
-app.use(passport.initialize());
-app.use(passport.session());
+router.use(passport.initialize());
+router.use(passport.session());
 
 passport.use(new LocalStrategy(User.authenticate()));
 passport.serializeUser(User.serializeUser());
@@ -30,22 +32,22 @@ passport.deserializeUser(User.deserializeUser());
 //=====================
 
 // Showing home page
-app.get("/", function (req, res) {
+router.get("/", function (req, res) {
 	res.render("home");
 });
 
 // Showing secret page
-app.get("/secret", isLoggedIn, function (req, res) {
+router.get("/secret", isLoggedIn, function (req, res) {
 	res.render("secret");
 });
 
 // Showing register form
-app.get("/register", function (req, res) {
+router.get("/register", function (req, res) {
 	res.render("register");
 });
 
 // Handling user signup
-app.post("/register", async (req, res) => {
+router.post("/register", async (req, res) => {
 	const user = await User.create({
 	username: req.body.username,
 	password: req.body.password
@@ -55,12 +57,12 @@ app.post("/register", async (req, res) => {
 });
 
 //Showing login form
-app.get("/login", function (req, res) {
+router.get("/login", function (req, res) {
 	res.render("login");
 });
 
 //Handling user login
-app.post("/login", async function(req, res){
+router.post("/login", async function(req, res){
 	try {
 		// check if the user exists
 		const user = await User.findOne({ username: req.body.username });
@@ -81,7 +83,7 @@ app.post("/login", async function(req, res){
 });
 
 //Handling user logout
-app.get("/logout", function (req, res) {
+router.get("/logout", function (req, res) {
 	req.logout(function(err) {
 		if (err) { return next(err); }
 		res.redirect('/');
@@ -96,7 +98,7 @@ function isLoggedIn(req, res, next) {
 }
 
 var port = process.env.PORT || 3000;
-app.listen(port, function () {
+router.listen(port, function () {
 	console.log("Server Has Started!");
 });
 

@@ -2,9 +2,9 @@
   "version": 2,
   "name": "nasa-image-everyday",
   "builds": [
-    {"src":"myapp/app.js", "use":  "@vercel/node"}
+    {"src":"./app.js", "use":  "@vercel/node"}
 ],
   "routes": [
-    {"src":  "/(.*)", "dest":  "myapp/app.js"}
+    {"src":  "/(.*)", "dest":  "/"}
   ]
 }
