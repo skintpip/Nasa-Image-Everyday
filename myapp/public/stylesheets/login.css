@@ -1,0 +1,17 @@
+body {
+    padding: 50px;
+    font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+    /*color: darkblue;*/
+    background-image: linear-gradient(79deg, blue, red 48%, white);
+}
+
+html {
+
+}
+
+a {
+    color: #00B7FF;
+}
+.index{
+    background-image: linear-gradient(79deg, blue, red 48%, white);
+}
