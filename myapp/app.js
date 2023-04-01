@@ -9,7 +9,7 @@ const User = require("./model/User");
 var app = express();
 
 mongoose.connect("mongodb+srv://dron:TyJzsc6ZsbzhUJhx@cluster0.petssoe.mongodb.net/?retryWrites=true&w=majority");
-
+app.set('views', __dirname + '/views');
 app.set("view engine", "ejs");
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(require("express-session")({
@@ -31,7 +31,7 @@ passport.deserializeUser(User.deserializeUser());
 
 // Showing home page
 app.get("/", function (req, res) {
-	res.render("home.ejs");
+	res.render("home");
 });
 
 // Showing secret page
