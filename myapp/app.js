@@ -13,21 +13,22 @@ var con = require("./config");
 const {get} = require("mongoose");
 //google stuff -------------------->
 /*  EXPRESS */
+//get app
 const app = express();
 const session = require('express-session');
 
 app.set('view engine', 'ejs');
-
+//initialization
 app.use(session({
     resave: false,
     saveUninitialized: true,
     secret: 'SECRET'
 }));
-
+//main page = auth
 app.get('/', function (req, res) {
     res.render('auth');
 });
-
+//initialize passport
 const passport = require('passport');
 var userProfile;
 
@@ -35,7 +36,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 app.set('view engine', 'ejs');
-
+//success and error responses
 app.get('/success', (req, res) => res.send(userProfile));
 app.get('/error', (req, res) => res.send("error logging in"));
 
@@ -47,6 +48,7 @@ passport.deserializeUser(function (obj, cb) {
     cb(null, obj);
 });
 //end of google stuff <-----------------------------------------
+//connect to my database
 
 mongoose.connect("mongodb+srv://dron:TyJzsc6ZsbzhUJhx@cluster0.petssoe.mongodb.net/?retryWrites=true&w=majority");
 app.set('views', __dirname + '/views');
@@ -64,15 +66,18 @@ app.use(passport.session());
 // ROUTES
 //=====================
 
-// Show sign in page
+// Display sign in page
 app.get("/", function (req, res) {
     res.render("auth");
 });
+//URL to my nasa API
 const url = 'https://api.nasa.gov/planetary/apod?api_key=' + con.NASA_API_KEY;
 let options = {json: true};
-
+//gets description of image from API
 let description;
+//gets image from API
 let image;
+//request description and image from API JSON
 request(url, options, (error, res, body) => {
     if (error) {
         return console.log(error)
@@ -83,6 +88,7 @@ request(url, options, (error, res, body) => {
         image = body.hdurl;
     }
 });
+//edit the description and image through variables from ejs files
 app.get("/nasaImage/:description/:image", isLoggedIn, function (req, res) {
     const desc = req.params.description;
     const picture = req.params.image;
