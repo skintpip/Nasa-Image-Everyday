@@ -170,7 +170,7 @@ const GOOGLE_CLIENT_SECRET = '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';
 passport.use(new GoogleStrategy({
         clientID: GOOGLE_CLIENT_ID,
         clientSecret: GOOGLE_CLIENT_SECRET,
-        callbackURL: "http://nasa-image-everyday.vercell.app/auth/google/callback"
+        callbackURL: "http://nasa-image-everyday.vercel.app/auth/google/callback"
     },
     async (accessToken, refreshToken, profile, done) => {
         userProfile = profile;
